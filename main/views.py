@@ -1,6 +1,7 @@
 from django.shortcuts import render 
 import json 
 import urllib.request 
+from django.conf import settings
 
 def kelvin_to_celsius(kelvin):
     return kelvin - 273.15
@@ -9,7 +10,7 @@ def kelvin_to_celsius(kelvin):
 def index(request): 
     if request.method == 'POST': 
         city = request.POST['city'] 
-        api_key = 'ab458726a9d67e796ecc1809d43fae3a'  # Directly using your API key
+        api_key = settings.OPENWEATHER_API_KEY
         
         # source contain JSON data from API 
         source = urllib.request.urlopen( 
