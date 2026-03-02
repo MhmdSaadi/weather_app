@@ -62,12 +62,18 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Get OpenWeatherMap API Key
+### 4. Configure Environment Variables
 
 1. Visit [OpenWeatherMap](https://openweathermap.org/)
 2. Sign up for a free account
 3. Get your API key from your account dashboard
-4. Replace the API key in `main/views.py` (line 10)
+4. Create a `.env` file in the root directory (alongside `manage.py`) and add your credentials:
+
+```env
+SECRET_KEY=your-django-secret-key-here
+DEBUG=True
+OPENWEATHER_API_KEY=your-api-key-here
+```
 
 ### 5. Run Database Migrations
 
@@ -110,9 +116,11 @@ weather_app/
 │   ├── settings.py         # Project configuration
 │   ├── urls.py             # Main URL configuration
 │   └── wsgi.py             # WSGI application
+├── .env                    # Environment variables (create this)
+├── .gitignore              # Git ignored files
 ├── requirements.txt        # Python dependencies
-├── vercel.json            # Vercel deployment configuration
-└── manage.py              # Django management script
+├── vercel.json             # Vercel deployment configuration
+└── manage.py               # Django management script
 ```
 
 ## API Integration 🔌
@@ -146,18 +154,13 @@ For production deployment, consider setting these environment variables:
 
 ### API Key Setup
 
-To use your own OpenWeatherMap API key:
+This application uses `python-dotenv` to securely manage secrets. Make sure your `.env` file contains your OpenWeatherMap API key:
 
-1. Replace the API key in `main/views.py`:
-```python
-api_key = 'your-api-key-here'
+```env
+OPENWEATHER_API_KEY=your-api-key-here
 ```
 
-2. For better security, use environment variables:
-```python
-import os
-api_key = os.environ.get('OPENWEATHER_API_KEY')
-```
+The application automatically loads this key from the `.env` file via `Wheather_App/settings.py` and uses it in `main/views.py`.
 
 ### Customization
 
